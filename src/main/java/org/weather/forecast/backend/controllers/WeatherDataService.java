@@ -1,4 +1,4 @@
-package org.weather.forecast.backend.rest;
+package org.weather.forecast.backend.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
