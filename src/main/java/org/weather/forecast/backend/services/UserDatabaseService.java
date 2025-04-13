@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.weather.forecast.backend.data.models.AppUser;
 import org.weather.forecast.backend.data.repositories.AppUserRepository;
@@ -18,7 +19,7 @@ public class UserDatabaseService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = appUserRepository.findByUsername(username);
         if(user != null) {
-            return user.toUserDetails();
+            return user;
         } else {
             throw new UsernameNotFoundException("username is empty");
         }

@@ -1,12 +1,16 @@
 package org.weather.forecast.backend.data.models;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class AppUser {
+public class AppUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +22,23 @@ public class AppUser {
 
     private String role;
 
+    @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL, optional = true)
+    private WeatherStation weatherStation;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
     public String getRole() {
         return role;
     }
@@ -26,13 +47,32 @@ public class AppUser {
         return username;
     }
 
-    public UserDetails toUserDetails() {
-        return User
-                .builder()
-                .username(this.username)
-                .password(this.password)
-                .roles(this.role)
-                .build();
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
+
+    public WeatherStation getWeatherStation() {
+        return weatherStation;
+    }
+
+    public void setWeatherStation(WeatherStation weatherStation) {
+        this.weatherStation = weatherStation;
     }
 
     public AppUser() {}

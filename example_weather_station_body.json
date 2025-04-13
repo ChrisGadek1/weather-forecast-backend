@@ -1,0 +1,6 @@
+{
+  "name": "podworko",
+  "sensors_list": "temperatura,cisnienie",
+  "measures": [],
+  "app_user_id": "4"
+}
