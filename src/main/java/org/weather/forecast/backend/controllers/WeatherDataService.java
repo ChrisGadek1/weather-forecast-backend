@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.weather.forecast.backend.data.dto.MeasureResponseDTO;
 import org.weather.forecast.backend.data.dto.WeatherStationDTO;
 import org.weather.forecast.backend.data.models.AppUser;
 import org.weather.forecast.backend.data.models.Measure;
@@ -16,6 +17,9 @@ import org.weather.forecast.backend.data.repositories.WeatherStationRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
+
+import static java.sql.Timestamp.from;
 
 @RestController
 @RequestMapping("/weather")
@@ -58,12 +62,56 @@ public class WeatherDataService {
             Long appUserId = appUserRepository.findByUsername(appUserName).getId();
             WeatherStation weatherStation = weatherStationRepository.findByAppUserId(appUserId);
             measure.setWeatherStation(weatherStation);
-            measure.setTimestamp(Timestamp.from(Instant.now()));
+            measure.setTimestamp(from(Instant.now()));
             measureRepository.save(measure);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/measure")
+    public ResponseEntity<List<MeasureResponseDTO>> getMeasures(@RequestParam(value = "from", defaultValue = "") String from, @RequestParam(value = "to", defaultValue = "") String to, @RequestParam(value = "station_id", defaultValue = "") String stationId) {
+        Timestamp fromTimestamp, toTimestamp;
+        Long stationIdConv = null;
+
+        try {
+            if(from.isEmpty()) {
+                fromTimestamp = Timestamp.from(Instant.EPOCH);
+            }
+            else {
+                fromTimestamp = Timestamp.valueOf(from);
+            }
+
+            if(to.isEmpty()) {
+                toTimestamp = Timestamp.from(Instant.now());
+            }
+            else {
+                toTimestamp = Timestamp.valueOf(to);
+            }
+
+            if (fromTimestamp.after(toTimestamp)) {
+                throw new IllegalArgumentException();
+            }
+
+            if(!stationId.isEmpty()) {
+                stationIdConv = Long.parseLong(stationId);
+            }
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<MeasureResponseDTO> result;
+
+        if(stationIdConv != null) {
+            result = measureRepository.findByTimestampsAndStationId(fromTimestamp, toTimestamp, stationIdConv);
+        }
+        else {
+            result = measureRepository.findByTimestamps(fromTimestamp, toTimestamp);
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 }

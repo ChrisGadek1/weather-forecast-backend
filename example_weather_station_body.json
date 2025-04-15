@@ -1,6 +1,6 @@
 {
-  "name": "podworko",
-  "sensors_list": "temperatura,cisnienie",
+  "name": "field_1",
+  "sensors_list": "temperature,pressure",
   "measures": [],
   "app_user_id": "4"
 }
