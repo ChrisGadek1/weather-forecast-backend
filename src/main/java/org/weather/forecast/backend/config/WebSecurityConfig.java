@@ -3,6 +3,7 @@ package org.weather.forecast.backend.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,8 +28,15 @@ public class WebSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home").permitAll()
-                        .anyRequest().authenticated()
+                        // Public access
+                        .requestMatchers(HttpMethod.GET, "/weather/measure").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/weather/station").permitAll()
+
+                        // Access restricted to role WEATHER_STATION
+                        .requestMatchers(HttpMethod.POST, "/weather/measure").hasRole("WEATHER_STATION")
+
+                        // All other endpoints restricted to role ADMIN
+                        .anyRequest().hasRole("ADMIN")
                 )
                 .httpBasic(Customizer.withDefaults());
 

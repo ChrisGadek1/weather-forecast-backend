@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.weather.forecast.backend.data.dto.MeasureResponseDTO;
+import org.weather.forecast.backend.data.dto.ShortWeatherStationDTO;
 import org.weather.forecast.backend.data.dto.WeatherStationDTO;
 import org.weather.forecast.backend.data.models.AppUser;
 import org.weather.forecast.backend.data.models.Measure;
@@ -17,6 +19,7 @@ import org.weather.forecast.backend.data.repositories.WeatherStationRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.sql.Timestamp.from;
@@ -41,10 +44,13 @@ public class WeatherDataService {
     @PostMapping("/station")
     public ResponseEntity<Object> createStation(@RequestBody WeatherStationDTO dto) {
         try {
-            AppUser appUser = appUserRepository.findById(Math.toIntExact(dto.appUserId))
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
 
-            WeatherStation station = new WeatherStation(dto.name, Arrays.stream(dto.sensorsList.split(",")).toList(), dto.measures);
+            AppUser appUser = new AppUser(dto.weatherStationAppUserDTO.getUsername(), new BCryptPasswordEncoder().encode(dto.weatherStationAppUserDTO.getPassword()), "ROLE_WEATHER_STATION");
+            if(appUserRepository.findByUsername(appUser.getUsername()) != null || weatherStationRepository.findByName(dto.name) != null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            appUserRepository.save(appUser);
+            WeatherStation station = new WeatherStation(dto.name, Arrays.stream(dto.sensorsList.split(",")).toList(), new LinkedList<>());
             station.setAppUser(appUser);
 
             weatherStationRepository.save(station);
@@ -53,6 +59,17 @@ public class WeatherDataService {
         }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/station")
+    public ResponseEntity<List<ShortWeatherStationDTO>> getStations() {
+        List<ShortWeatherStationDTO> result = new LinkedList<>();
+        weatherStationRepository.findAll().iterator().forEachRemaining(station -> {
+            ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(station.getId(), station.getName());
+            result.add(shortWeatherStationDTO);
+        });
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/measure")

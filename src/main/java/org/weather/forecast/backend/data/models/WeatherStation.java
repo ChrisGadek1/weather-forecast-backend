@@ -13,6 +13,7 @@ public class WeatherStation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique=true)
     private String name;
 
     @JsonProperty("sensors_list")
@@ -32,6 +33,10 @@ public class WeatherStation {
     }
 
     public WeatherStation() {}
+
+    public Long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

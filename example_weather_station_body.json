@@ -1,6 +1,8 @@
 {
   "name": "field_1",
   "sensors_list": "temperature,pressure",
-  "measures": [],
-  "app_user_id": "4"
+  "app_user": {
+    "username": "user",
+    "password": "password"
+  }
 }

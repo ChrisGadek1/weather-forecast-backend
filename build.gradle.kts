@@ -16,6 +16,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.mysql:mysql-connector-j:8.0.33")
+    implementation("org.apache.logging.log4j:log4j-core:2.24.3")
     implementation("org.hibernate:hibernate-core:6.6.0.Final")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))

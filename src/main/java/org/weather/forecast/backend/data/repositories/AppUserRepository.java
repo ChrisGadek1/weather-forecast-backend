@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
     AppUser findByUsername(String username);
+
+    AppUser findByRole(String role);
 }
