@@ -15,6 +15,7 @@ import org.weather.forecast.backend.data.models.WeatherStation;
 import org.weather.forecast.backend.data.repositories.AppUserRepository;
 import org.weather.forecast.backend.data.repositories.MeasureRepository;
 import org.weather.forecast.backend.data.repositories.WeatherStationRepository;
+import org.weather.forecast.backend.services.SensorNotificationService;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -35,6 +36,9 @@ public class WeatherDataService {
 
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private SensorNotificationService notificationService;
 
     @GetMapping("/data")
     public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -81,6 +85,18 @@ public class WeatherDataService {
             measure.setWeatherStation(weatherStation);
             measure.setTimestamp(from(Instant.now()));
             measureRepository.save(measure);
+
+            MeasureResponseDTO websocketResponse = new MeasureResponseDTO(
+                    measure.getMeasuredQuantityName(),
+                    measure.getValue(),
+                    measure.getTimestamp(),
+                    measure.getUnit(),
+                    measure.getWeatherStation().getName(),
+                    measure.getWeatherStation().getId()
+            );
+
+            notificationService.notifyNewMeasurement(websocketResponse);
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

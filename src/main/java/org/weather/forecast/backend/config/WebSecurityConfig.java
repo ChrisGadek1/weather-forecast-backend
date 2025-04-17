@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.weather.forecast.backend.services.UserDatabaseService;
@@ -31,6 +30,7 @@ public class WebSecurityConfig {
                         // Public access
                         .requestMatchers(HttpMethod.GET, "/weather/measure").permitAll()
                         .requestMatchers(HttpMethod.GET, "/weather/station").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/ws-weather").permitAll()
 
                         // Access restricted to role WEATHER_STATION
                         .requestMatchers(HttpMethod.POST, "/weather/measure").hasRole("WEATHER_STATION")
