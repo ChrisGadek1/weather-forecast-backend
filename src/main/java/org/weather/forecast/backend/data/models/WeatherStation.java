@@ -19,7 +19,7 @@ public class WeatherStation {
     @JsonProperty("sensors_list")
     private String rawStationSensorList;
 
-    @OneToMany
+    @OneToMany(mappedBy = "weatherStation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Measure> measures;
 
     @OneToOne

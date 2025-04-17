@@ -22,6 +22,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.sql.Timestamp.from;
 
@@ -39,11 +40,6 @@ public class WeatherDataService {
 
     @Autowired
     private SensorNotificationService notificationService;
-
-    @GetMapping("/data")
-    public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return "test "+ name;
-    }
 
     @PostMapping("/station")
     public ResponseEntity<Object> createStation(@RequestBody WeatherStationDTO dto) {
@@ -74,6 +70,23 @@ public class WeatherDataService {
         });
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/station/{id}")
+    public ResponseEntity<Object> deleteStation(@PathVariable int id) {
+        Optional<WeatherStation> weatherStation = weatherStationRepository.findById(id);
+        if(weatherStation.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            AppUser appUser = weatherStation.get().getAppUser();
+            measureRepository.deleteAll(weatherStation.get().getMeasures());
+            measureRepository.flush();
+            weatherStation.get().getMeasures().clear();
+            weatherStationRepository.delete(weatherStation.get());
+            appUserRepository.delete(appUser);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @PostMapping("/measure")
@@ -145,6 +158,17 @@ public class WeatherDataService {
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/measure/{id}")
+    public ResponseEntity<Object> deleteMeasure(@PathVariable int id) {
+        Optional<Measure> measure = measureRepository.findById(id);
+        if(measure.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            measureRepository.delete(measure.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 }
