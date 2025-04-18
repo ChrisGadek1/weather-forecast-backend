@@ -36,7 +36,7 @@ public class PostConstructionConfiguration {
 
             AppUser newAdmin = new AppUser("admin", new BCryptPasswordEncoder().encode(generatedPassword), "ROLE_ADMIN");
             appUserRepository.save(newAdmin);
-            saveToFile(".env", List.of("# ADMIN CREDENTIALS (DELETE THIS RIGHT AFTER CREATION)", "username: admin", "password: "+generatedPassword));
+            saveToFile(".admin_credentials", List.of("# ADMIN CREDENTIALS (DELETE THIS RIGHT AFTER CREATION)", "username: admin", "password: "+generatedPassword));
             logger.info("No admin user - created new");
         }
     }
