@@ -41,7 +41,7 @@ public class PostConstructionConfiguration {
         }
     }
 
-    private String generateRandomPassword(int length) {
+    String generateRandomPassword(int length) {
         Set<Character> forbiddenChars = Set.of('`', '@', '\'', '\"', '/', '\\', '$', '%');
         char[] randomChars = new char[length];
 
@@ -60,7 +60,7 @@ public class PostConstructionConfiguration {
         return String.valueOf(randomChars);
     }
 
-    private void saveToFile(String path, List<String> content) {
+    void saveToFile(String path, List<String> content) {
         Path totalPath = Path.of(System.getProperty("user.dir") + "/" + path);
 
         if(!Files.exists(totalPath)) {

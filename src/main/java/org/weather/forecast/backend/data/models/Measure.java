@@ -14,7 +14,8 @@ public class Measure {
 
     private String measuredQuantityName;
 
-    private Double value;
+    @Column(name = "measurement_value")
+    private Float value;
 
     private Timestamp timestamp;
 
@@ -24,7 +25,7 @@ public class Measure {
     @JoinColumn(name = "weather_station_id", referencedColumnName = "id")
     private WeatherStation weatherStation;
 
-    public Measure(String measuredQuantityName, Double value, String unit) {
+    public Measure(String measuredQuantityName, Float value, String unit) {
         this.measuredQuantityName = measuredQuantityName;
         this.value = value;
         this.timestamp = Timestamp.from(Instant.now());
@@ -37,7 +38,7 @@ public class Measure {
         return measuredQuantityName;
     }
 
-    public Double getValue() {
+    public Float getValue() {
         return value;
     }
 

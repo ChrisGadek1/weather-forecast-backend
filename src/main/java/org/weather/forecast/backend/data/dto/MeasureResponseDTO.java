@@ -4,12 +4,12 @@ import java.sql.Timestamp;
 
 public class MeasureResponseDTO {
     private String measuredQuantityName;
-    private Double value;
+    private Float value;
     private Timestamp timestamp;
     private String unit;
     private ShortWeatherStationDTO shortWeatherStationDTO;
 
-    public MeasureResponseDTO(String measuredQuantityName, Double value, Timestamp timestamp, String unit, String weatherStationName, Long weatherStationId) {
+    public MeasureResponseDTO(String measuredQuantityName, Float value, Timestamp timestamp, String unit, String weatherStationName, Long weatherStationId) {
         this.measuredQuantityName = measuredQuantityName;
         this.value = value;
         this.timestamp = timestamp;
@@ -21,7 +21,7 @@ public class MeasureResponseDTO {
         return measuredQuantityName;
     }
 
-    public Double getValue() {
+    public Float getValue() {
         return value;
     }
 

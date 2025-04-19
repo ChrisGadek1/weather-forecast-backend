@@ -20,8 +20,11 @@ dependencies {
     implementation("org.hibernate:hibernate-core:6.6.0.Final")
     implementation("org.springframework.boot:spring-boot-starter-websocket:3.4.4")
 
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.17.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.4")
+    testImplementation("com.h2database:h2")
+
 }
 
 tasks.test {
