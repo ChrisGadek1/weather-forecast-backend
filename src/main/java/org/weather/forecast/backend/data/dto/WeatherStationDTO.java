@@ -10,4 +10,13 @@ public class WeatherStationDTO {
 
     @JsonProperty("app_user")
     public WeatherStationAppUserDTO weatherStationAppUserDTO;
+
+    public WeatherStationDTO(String name, String sensorsList, WeatherStationAppUserDTO weatherStationAppUserDTO) {
+        this.name = name;
+        this.sensorsList = sensorsList;
+        this.weatherStationAppUserDTO = weatherStationAppUserDTO;
+    }
+
+    public WeatherStationDTO() {
+    }
 }

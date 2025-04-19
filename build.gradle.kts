@@ -1,7 +1,24 @@
 plugins {
     id("java")
+    id("jacoco")
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
+}
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy("jacocoTestReport")
+}
+
+tasks.jacocoTestReport {
+    dependsOn("test") // tests are required to run before generating report
+    reports {
+        html.required.set(true)
+    }
 }
 
 group = "org.weather.forecast.backend"
@@ -24,6 +41,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.4")
     testImplementation("com.h2database:h2")
+    testImplementation("org.springframework.security:spring-security-test")
 
 }
 

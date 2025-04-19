@@ -32,7 +32,9 @@ public class WeatherStation {
         this.measures = measures;
     }
 
-    public WeatherStation() {}
+    public WeatherStation() {
+        this.rawStationSensorList = "";
+    }
 
     public Long getId() {
         return id;
@@ -43,6 +45,9 @@ public class WeatherStation {
     }
 
     public List<String> getSensorsList() {
+        if(rawStationSensorList.isEmpty()) {
+            return List.of();
+        }
         return Arrays.stream(rawStationSensorList.split(",")).toList();
     }
 
@@ -60,5 +65,9 @@ public class WeatherStation {
 
     public void setRawStationSensorList(String rawStationSensorList) {
         this.rawStationSensorList = rawStationSensorList;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -83,4 +83,8 @@ public class AppUser implements UserDetails {
         this.password = password;
         this.role = role;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

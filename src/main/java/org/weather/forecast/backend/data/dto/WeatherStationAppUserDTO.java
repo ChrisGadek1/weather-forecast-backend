@@ -10,6 +10,9 @@ public class WeatherStationAppUserDTO {
         this.password = password;
     }
 
+    public WeatherStationAppUserDTO() {
+    }
+
     public String getUsername() {
         return username;
     }
