@@ -122,7 +122,7 @@ public class WeatherDataServiceTest {
     @Test
     @DisplayName("GET /weather/measure - range query")
     void getMeasures() throws Exception {
-        MeasureResponseDTO dto = new MeasureResponseDTO("temp", 20.0f, Timestamp.from(Instant.now()), "C", "Station", 1L);
+        MeasureResponseDTO dto = new MeasureResponseDTO("temp", 20.0f, Timestamp.from(Instant.now()), "C", "Station", 1L, 1L);
         when(measureRepo.findByTimestamps(any(), any())).thenReturn(List.of(dto));
 
         mockMvc.perform(get("/weather/measure")

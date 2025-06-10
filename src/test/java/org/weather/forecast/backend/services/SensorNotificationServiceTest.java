@@ -28,7 +28,7 @@ public class SensorNotificationServiceTest {
     public void testNotifyNewMeasurement() {
         // Given
         ShortWeatherStationDTO station = new ShortWeatherStationDTO(1L, "Test Station");
-        MeasureResponseDTO message = new MeasureResponseDTO("Temperature", 22.5f, new Timestamp(System.currentTimeMillis()), "Celsius", station.getName(), station.getId());
+        MeasureResponseDTO message = new MeasureResponseDTO("Temperature", 22.5f, new Timestamp(System.currentTimeMillis()), "Celsius", station.getName(), station.getId(), 1L);
 
         // When
         sensorNotificationService.notifyNewMeasurement(message);

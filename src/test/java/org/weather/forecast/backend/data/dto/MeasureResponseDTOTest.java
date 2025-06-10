@@ -18,7 +18,7 @@ public class MeasureResponseDTOTest {
         Long weatherStationId = 1L;
 
         MeasureResponseDTO measureResponseDTO = new MeasureResponseDTO(
-                measuredQuantityName, value, timestamp, unit, weatherStationName, weatherStationId
+                measuredQuantityName, value, timestamp, unit, weatherStationName, weatherStationId, 1L
         );
 
         assertEquals(measuredQuantityName, measureResponseDTO.getMeasuredQuantityName());
@@ -35,7 +35,7 @@ public class MeasureResponseDTOTest {
     @Test
     void testMeasureResponseDTOWithNullValues() {
         MeasureResponseDTO measureResponseDTO = new MeasureResponseDTO(
-                null, null, null, null, null, null
+                null, null, null, null, null, null, null
         );
 
         assertNull(measureResponseDTO.getMeasuredQuantityName());

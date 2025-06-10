@@ -8,13 +8,15 @@ public class MeasureResponseDTO {
     private Timestamp timestamp;
     private String unit;
     private ShortWeatherStationDTO shortWeatherStationDTO;
+    private Long id;
 
-    public MeasureResponseDTO(String measuredQuantityName, Float value, Timestamp timestamp, String unit, String weatherStationName, Long weatherStationId) {
+    public MeasureResponseDTO(String measuredQuantityName, Float value, Timestamp timestamp, String unit, String weatherStationName, Long weatherStationId, Long id) {
         this.measuredQuantityName = measuredQuantityName;
         this.value = value;
         this.timestamp = timestamp;
         this.unit = unit;
         this.shortWeatherStationDTO = new ShortWeatherStationDTO(weatherStationId, weatherStationName);
+        this.id = id;
     }
 
     public String getMeasuredQuantityName() {
@@ -35,5 +37,9 @@ public class MeasureResponseDTO {
 
     public ShortWeatherStationDTO getShortWeatherStationDTO() {
         return shortWeatherStationDTO;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

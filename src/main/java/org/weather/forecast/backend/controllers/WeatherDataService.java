@@ -105,7 +105,8 @@ public class WeatherDataService {
                     measure.getTimestamp(),
                     measure.getUnit(),
                     measure.getWeatherStation().getName(),
-                    measure.getWeatherStation().getId()
+                    measure.getWeatherStation().getId(),
+                    measure.getId()
             );
 
             notificationService.notifyNewMeasurement(websocketResponse);

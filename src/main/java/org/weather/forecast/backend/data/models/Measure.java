@@ -50,6 +50,10 @@ public class Measure {
         return unit;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public WeatherStation getWeatherStation() {
         return weatherStation;
     }
