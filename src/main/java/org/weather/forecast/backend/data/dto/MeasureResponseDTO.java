@@ -1,6 +1,7 @@
 package org.weather.forecast.backend.data.dto;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 public class MeasureResponseDTO {
     private String measuredQuantityName;
@@ -15,7 +16,7 @@ public class MeasureResponseDTO {
         this.value = value;
         this.timestamp = timestamp;
         this.unit = unit;
-        this.shortWeatherStationDTO = new ShortWeatherStationDTO(weatherStationId, weatherStationName);
+        this.shortWeatherStationDTO = new ShortWeatherStationDTO(weatherStationId, weatherStationName, "");
         this.id = id;
     }
 

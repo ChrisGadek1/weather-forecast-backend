@@ -71,7 +71,8 @@ Example response:
 [ 
     {
         "id": 1,
-        "name": "field_1"
+        "name": "field_1",
+        "sensor_list": "temperature,pressure"
     }
 ]
 ```
@@ -90,6 +91,7 @@ Example response:
 ```
 [ 
     {
+        "id": 1,
         "measuredQuantityName": "temperature",
         "value": 20.0,
         "timestamp": "2025-04-19T20:43:33.501+00:00",

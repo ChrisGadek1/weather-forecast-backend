@@ -10,7 +10,7 @@ public class ShortWeatherStationDTOTest {
         Long id = 1L;
         String name = "Station1";
 
-        ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(id, name);
+        ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(id, name, "");
 
         assertEquals(id, shortWeatherStationDTO.getId());
         assertEquals(name, shortWeatherStationDTO.getName());
@@ -21,7 +21,7 @@ public class ShortWeatherStationDTOTest {
         Long id = 1L;
         String name = "Station1";
 
-        ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(id, name);
+        ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(id, name, "");
 
         Long newId = 2L;
         String newName = "Station2";
@@ -34,7 +34,7 @@ public class ShortWeatherStationDTOTest {
 
     @Test
     void testShortWeatherStationDTOWithNullValues() {
-        ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(null, null);
+        ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(null, null, null);
 
         assertNull(shortWeatherStationDTO.getId());
         assertNull(shortWeatherStationDTO.getName());

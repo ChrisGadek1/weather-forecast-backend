@@ -3,10 +3,12 @@ package org.weather.forecast.backend.data.dto;
 public class ShortWeatherStationDTO {
     private Long id;
     private String name;
+    private String sensorList;
 
-    public ShortWeatherStationDTO(Long id, String name) {
+    public ShortWeatherStationDTO(Long id, String name, String sensorList) {
         this.id = id;
         this.name = name;
+        this.sensorList = sensorList;
     }
 
     public Long getId() {
@@ -23,5 +25,13 @@ public class ShortWeatherStationDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSensorList() {
+        return sensorList;
+    }
+
+    public void setSensorList(String sensorList) {
+        this.sensorList = sensorList;
     }
 }

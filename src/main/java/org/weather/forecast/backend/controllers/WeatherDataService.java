@@ -65,7 +65,7 @@ public class WeatherDataService {
     public ResponseEntity<List<ShortWeatherStationDTO>> getStations() {
         List<ShortWeatherStationDTO> result = new LinkedList<>();
         weatherStationRepository.findAll().iterator().forEachRemaining(station -> {
-            ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(station.getId(), station.getName());
+            ShortWeatherStationDTO shortWeatherStationDTO = new ShortWeatherStationDTO(station.getId(), station.getName(), String.join(",", station.getSensorsList()));
             result.add(shortWeatherStationDTO);
         });
 
